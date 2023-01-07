@@ -1,9 +1,8 @@
 const width = window.innerWidth
 const height = window.innerHeight
 
-const rippleWidth = 50
-
-let boxes = 30;
+const rippleWidth = 100
+let boxes = 20;
 
 let gapWidth = Math.round(width / boxes)
 
@@ -70,15 +69,16 @@ document.body.addEventListener("click", (e) => {
    }
 
    // If there's not already a ripple create one
-   rippleArr.push(ripple)
+   if(rippleArr.length == 0)
+      rippleArr.push(ripple)
 })
 
 setInterval(function(){
-   console.log(rippleArr)
    // Check each of the boxes to see whether they should be on
    // Loop through checkboxes
    for(let checkbox of checkboxes){
 
+      // Get the x and y of the current checkbox
       let x = checkbox.classList[0]
       let y
       if(checkbox.classList.length == 1){
@@ -93,14 +93,12 @@ setInterval(function(){
          // Pythagoras
          let chosenX = r.originX
          let chosenY = r.originY
-         console.log('ChosenX, ChosenY, x, y = ', chosenX, chosenY, x , y)
 
          let X = Math.abs(chosenX - x)
          let Y = Math.abs(chosenY - y)
 
          // Distance from the clicked checkbox
          let dist = Math.sqrt(Math.pow(X, 2) + Math.pow(Y, 2))
-         console.log("X Y and Dist = ", X, Y, dist)
 
          // If the distance is the same -> check the box. Else uncheck.
          if(Math.abs(dist - r.radius) <= rippleWidth){
@@ -108,15 +106,16 @@ setInterval(function(){
          } else {
             checkbox.checked = false
          }       
+
       }
    }
 
-   // Increment the ripples radius
+   // Increment the ripple if it's still small enough
    for(let r of rippleArr){
-      if(r.radius >= width * 1.5 && r.radius >= height * 1.5){
+      if(r.radius >= width * 1.15 && r.radius >= height * 1.15){
          rippleArr.shift()
       } else {
          r.radius += 10
       }
    }
-}, 10)
+}, 5)
