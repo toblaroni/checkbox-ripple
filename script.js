@@ -1,8 +1,16 @@
 const width = window.innerWidth
 const height = window.innerHeight
 
-const rippleWidth = 100
-let boxes = 20;
+let rippleWidth
+let boxes
+
+if(width > 700){
+   rippleWidth = 100
+   boxes = 20
+} else {
+   rippleWidth = 50
+   boxes = 11
+}
 
 let gapWidth = Math.round(width / boxes)
 
@@ -22,6 +30,7 @@ class Ripple {
 
 window.onload = function(){
    let container = document.getElementById('container')
+   
 
    for(let x = 0; x <= width; x += gapWidth){
       for(let y = 0; y <= height + gapWidth; y += gapWidth){
